@@ -1,6 +1,7 @@
 from flask import Flask
 from config import get_env_config
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 
 def create_app(config_filename: str) -> Flask:
@@ -9,6 +10,9 @@ def create_app(config_filename: str) -> Flask:
     # setup application environment
     app.config.from_object(config_filename)
     app.url_map.strict_slashes = False
+
+    #Cors
+    cors = CORS(app, resources={r"*": {"origins": "*"}})
 
     from app.database.sqlalchemy_extension import db
 
